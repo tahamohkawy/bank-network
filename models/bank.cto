@@ -1,0 +1,107 @@
+/**
+ * Write your model definitions here
+ */
+
+
+namespace com.talentana.bc.bank
+
+import com.talentana.bc.bank.concepts.CanadianAddress
+
+
+//OR to import all types from the other model file
+//import com.talentana.bc.bank.concepts.*
+
+enum Status {
+  o ACTIVE
+  o CLOSED
+  o INACTIVE
+}
+
+enum Gender{
+  o MALE
+  o FEMALE
+}
+
+
+participant Customer identified by customerId {
+  o String customerId
+  o String firstName regex=/[A-Z][a-z]/
+  o String lastName
+  o DateTime dob
+  o CanadianAddress address
+  o Gender gender
+  o Integer age  range=[18,] optional
+  o Boolean newCustomer default=true
+}
+
+participant VIPCustomer extends Customer {
+  
+}
+
+asset Account identified by accountId {
+  o String accountId
+  o Double balance
+  o Status staus
+  --> Customer owner
+}
+
+asset FamilyAccount extends Account {
+  --> Customer[] family
+}
+
+asset SecretAccount extends Account {
+
+}
+
+transaction OpenAccount {
+  --> Customer owner
+}
+
+transaction CloseAccount {
+  --> Account account
+}
+
+transaction Deposit {
+  --> Account account
+  o Double amount
+}
+
+transaction WithDraw {
+  --> Account account
+  o Double amount
+}
+
+transaction Transfer {
+  --> Account from
+  --> Account to
+  o Double amount
+}
+
+event AccountOpened {
+  o String message
+  --> Account account
+}
+
+event AccountClosed {
+  o String message
+  --> Account account
+}
+
+event Deposited {
+  o String mnessage
+  o Double amount
+  --> Account account
+}
+
+event WithDrawn {
+  o String message
+  o Double amount
+  --> Account account
+}
+
+event Transfered {
+  o String message
+  o Double amount
+  --> Account from
+  --> Account to
+}

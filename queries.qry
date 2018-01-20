@@ -1,0 +1,27 @@
+query allCustomers{
+  description: "Get alL"
+  statement: SELECT com.talentana.bc.bank.Customer
+}
+
+query searchByFirstName{
+  description: "Search by first name like"
+  statement: SELECT com.talentana.bc.bank.Customer
+              WHERE (firstName CONTAINS _$firstName)
+}
+
+query allAccounts {
+  description: "Get all accounts"
+  statement: SELECT com.talentana.bc.bank.Account
+}
+
+query accountsWithBalanceMoreThan {
+  description:"Get accounts with balance more than"
+  statement: SELECT com.talentana.bc.bank.Account
+              WHERE (balance > _$balance)
+}
+
+query accountsWithBalanceLessThan {
+  description: "Get accounts with balance less than"
+  statement: SELECT com.talentana.bc.bank.Account
+              WHERE (balance < _$balance)
+}

@@ -1,0 +1,11 @@
+namespace com.talentana.bc.bank.concepts
+
+abstract concept Address {
+  o Integer streetNo
+  o String streetName
+}
+
+//We can move this to concepts cto
+concept CanadianAddress extends Address{
+  o String zipCode default="M4P 1Z3" regex=/[A-Z][a-z]{7}/
+}
